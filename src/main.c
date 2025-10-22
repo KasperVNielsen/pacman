@@ -1,5 +1,3 @@
-
-
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -7,57 +5,43 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-static void error_callback(int error, const char* description) {
-    fprintf(stderr, "GLFW Error (%d): %s\n", error, description);
-}
-
+// Called whenever a key is pressed or released
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     (void)scancode; (void)mods;
+
+    if (action == GLFW_PRESS && key >= 32 && key <= 126) {
+        printf("You pressed: %c\n", (char)key);
+    } else if (action == GLFW_PRESS) {
+        printf("You pressed special key: %d\n", key);
+    }
+    fflush(stdout);
+
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GLFW_TRUE);
 }
 
-int main(void) {
-    glfwSetErrorCallback(error_callback);
 
+int main(void) {
     if (!glfwInit()) {
-        fprintf(stderr, "Failed: glfwInit()\n");
-        return EXIT_FAILURE;
+        fprintf(stderr, "Failed to init GLFW\n");
+        return -1;
     }
 
-    // Request an OpenGL 3.3 core context (change if needed)
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-#ifdef __APPLE__
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-#endif
-
-    GLFWwindow* window = glfwCreateWindow(800, 600, "pman (glad+glfw)", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(640, 480, "Key Press Printer", NULL, NULL);
     if (!window) {
-        fprintf(stderr, "Failed: glfwCreateWindow()\n");
+        fprintf(stderr, "Failed to create window\n");
         glfwTerminate();
-        return EXIT_FAILURE;
+        return -1;
     }
 
     glfwMakeContextCurrent(window);
-    glfwSwapInterval(1);
+    gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+
     glfwSetKeyCallback(window, key_callback);
 
-    // Initialize GLAD after making the context current
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        fprintf(stderr, "Failed: gladLoadGLLoader()\n");
-        glfwDestroyWindow(window);
-        glfwTerminate();
-        return EXIT_FAILURE;
-    }
-
-    printf("GL Version: %s\n", glGetString(GL_VERSION));
-    fflush(stdout);
-
+    // black background
     while (!glfwWindowShouldClose(window)) {
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClearColor(0, 0, 0, 1);
         glClear(GL_COLOR_BUFFER_BIT);
 
         glfwSwapBuffers(window);
@@ -66,5 +50,5 @@ int main(void) {
 
     glfwDestroyWindow(window);
     glfwTerminate();
-    return EXIT_SUCCESS;
+    return 0;
 }
