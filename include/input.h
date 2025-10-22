@@ -1,14 +1,16 @@
 #ifndef INPUT_H
 #define INPUT_H
 
-#include <stdint.h>
-
 typedef struct InputState {
-    int up, down, left, right;
+    int up;
+    int down;
+    int left;
+    int right;
     int quit;
 } InputState;
 
-void input_init(void);
-void input_poll(InputState *in);
+/* set the GLFW window (implementation file will include GLFW) */
+void input_set_window(void *window);
+void input_poll(InputState *out);
 
 #endif // INPUT_H
