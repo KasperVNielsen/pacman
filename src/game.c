@@ -1,5 +1,4 @@
 #include "game.h"
-#include "input.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -41,6 +40,4 @@ void game_update(GameState* g, float dt, const InputState *in) {
 
 void game_render(GameState* g) {
     (void)g;
-    /* No GL calls here. If you need OpenGL calls, move them to render.c
-       which will include glad/glfw with the correct macros. */
 }

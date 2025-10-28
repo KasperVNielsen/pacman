@@ -1,50 +1,65 @@
+#include <GLFW/glfw3.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
-
-#define GLFW_INCLUDE_NONE
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
 #include "game.h"
 #include "input.h"
 
+#define WIN_W 800
+#define WIN_H 600
 
 int main(void) {
-    if (!glfwInit()) return -1;
-    GLFWwindow *window = glfwCreateWindow(800,600,"Pacman",NULL,NULL);
-    if (!window) { glfwTerminate(); return -1; }
-    glfwMakeContextCurrent(window);
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        fprintf(stderr,"Failed to init GL\n"); return -1;
+    if (!glfwInit()) {
+        fprintf(stderr, "Failed to initialize GLFW\n");
+        return EXIT_FAILURE;
     }
 
-    // input_set_window(window);
+    GLFWwindow *window = glfwCreateWindow(WIN_W, WIN_H, "Pacman", NULL, NULL);
+    if (!window) {
+        fprintf(stderr, "Failed to create window\n");
+        glfwTerminate();
+        return EXIT_FAILURE;
+    }
+
+    glfwMakeContextCurrent(window);
+    glfwSwapInterval(1);
+
+    input_set_window(window);
+    InputState input = {0};
 
     GameState *game = game_create();
-    InputState in = {0};
-
-    double last = glfwGetTime();
-    while (!glfwWindowShouldClose(window)) {
-        double now = glfwGetTime();
-        float dt = (float)(now - last);
-        last = now;
-
-        // poll events and read input
-        glfwPollEvents();
-        input_poll(&in);
-
-        // update + render
-        game_update(game, dt, &in);
-        game_render(game);
-
-        glfwSwapBuffers(window);
-
-        if (in.quit) glfwSetWindowShouldClose(window, GLFW_TRUE);
+    if (!game) {
+        glfwDestroyWindow(window);
+        glfwTerminate();
+        return EXIT_FAILURE;
     }
 
+    double lastTime = glfwGetTime();
+    printf("Game running! Use arrow keys, ESC to quit.\n");
+
+    while (!glfwWindowShouldClose(window)) {
+        double currentTime = glfwGetTime();
+        float deltaTime = (float)(currentTime - lastTime);
+        lastTime = currentTime;
+
+        glfwPollEvents();
+        input_poll(&input);
+
+        if (input.quit)
+            glfwSetWindowShouldClose(window, GLFW_TRUE);
+
+        // Print key input state
+        printf("Up:%d Down:%d Left:%d Right:%d Quit:%d\r",
+               input.up, input.down, input.left, input.right, input.quit);
+        fflush(stdout);
+
+        game_update(game, deltaTime, &input);
+        game_render(game);
+        glfwSwapBuffers(window);
+    }
+
+    printf("\nExiting game...\n");
     game_destroy(game);
     glfwDestroyWindow(window);
     glfwTerminate();
-    return 0;
+    return EXIT_SUCCESS;
 }
