@@ -7,7 +7,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-/* --- Shaders --- */
+/*  Shaders  */
 /* Vertex shader accepts position and a vec2 offset uniform */
 static const char *vertex_src =
 "#version 330 core\n"
@@ -26,7 +26,7 @@ static const char *fragment_src =
 "    FragColor = vec4(1.0, 1.0, 1.0, 1.0);\n"
 "}\n";
 
-/* --- Shader helpers --- */
+/*  Shader helpers  */
 static GLuint compile_shader(GLenum type, const char *src) {
     GLuint s = glCreateShader(type);
     glShaderSource(s, 1, &src, NULL);
@@ -60,7 +60,7 @@ static GLuint link_program(GLuint v, GLuint f) {
     return p;
 }
 
-/* --- main --- */
+/*  main  */
 int main(void) {
     if (!glfwInit()) {
         fprintf(stderr, "GLFW init failed\n");
@@ -89,7 +89,7 @@ int main(void) {
         return EXIT_FAILURE;
     }
 
-    /* --- Square geometry (centered at origin, in NDC) --- */
+    /*  Square geometry (centered at origin, in NDC)  */
     float half = 0.05f;  /* small square size (side = 0.1) */
     float vertices[] = {
         -half, -half,
