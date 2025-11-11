@@ -79,7 +79,7 @@ int main(void) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow *window = glfwCreateWindow(1280, 720, "Square + Walls + Input Logger", NULL, NULL);
+    GLFWwindow *window = glfwCreateWindow(1280, 720, "pman", NULL, NULL);
     if (!window) {
         fprintf(stderr, "GLFW window failed\n");
         glfwTerminate();
@@ -133,9 +133,7 @@ int main(void) {
 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-    /*  define some walls (positions in NDC, sizes in NDC half extents)  
-       These are arbitrary sample walls; adjust as desired.
-       Note: coordinate space is NDC (-1..1). */
+    /* coordinate space is NDC (-1..1). */
     Rect walls[] = {
         /* vertical wall left */
         { -0.6f,  0.0f, 0.05f, 0.6f },
@@ -221,7 +219,7 @@ int main(void) {
         /* draw walls (grey) */
         for (int i = 0; i < wall_count; ++i) {
             glUniform2f(loc_uOffset, walls[i].x, walls[i].y);
-            glUniform2f(loc_uScale, walls[i].halfW * 2.0f, walls[i].halfH * 2.0f); // scale is size
+            glUniform2f(loc_uScale, walls[i].halfW * 1.0f, walls[i].halfH * 1.0f); // scale is size
             glUniform3f(loc_uColor, 0.6f, 0.6f, 0.6f);
             glBindVertexArray(VAO);
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -229,7 +227,7 @@ int main(void) {
 
         /* draw player (white) */
         glUniform2f(loc_uOffset, posX, posY);
-        glUniform2f(loc_uScale, half * 2.0f, half * 2.0f);
+        glUniform2f(loc_uScale, half * 1.0f, half * 1.0f);
         glUniform3f(loc_uColor, 1.0f, 1.0f, 1.0f);
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
