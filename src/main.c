@@ -134,19 +134,44 @@ int main(void) {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
     /* coordinate space is NDC (-1..1). */
-    Rect walls[] = {
-        /* vertical wall left */
-        { -0.6f,  0.0f, 0.05f, 0.6f },
-        /* vertical wall right */
-        {  0.6f,  0.0f, 0.05f, 0.6f },
-        /* horizontal top */
-        {  0.0f,  0.6f, 0.6f, 0.05f },
-        /* horizontal bottom */
-        {  0.0f, -0.6f, 0.6f, 0.05f },
-        /* center block */
-        {  0.0f,  0.0f, 0.25f, 0.05f },
-    };
-    const int wall_count = (int)(sizeof(walls)/sizeof(walls[0]));
+  /* Pac-Man style maze: replace your previous `walls[]` with this */
+Rect walls[] = {
+    /* outer frame */
+    { -0.95f,  0.0f, 0.05f, 0.95f },  // left outer
+    {  0.95f,  0.0f, 0.05f, 0.95f },  // right outer
+    {  0.00f,  0.95f, 0.90f, 0.05f },  // top outer
+    {  0.00f, -0.95f, 0.90f, 0.05f },  // bottom outer
+
+    /* top corridor bars */
+    { -0.50f,  0.72f, 0.30f, 0.04f },  // left top horizontal
+    {  0.50f,  0.72f, 0.30f, 0.04f },  // right top horizontal
+
+    /* bottom corridor bars */
+    { -0.50f, -0.72f, 0.30f, 0.04f },  // left bottom horizontal
+    {  0.50f, -0.72f, 0.30f, 0.04f },  // right bottom horizontal
+
+    /* vertical quarter dividers (create the long corridors) */
+    { -0.65f,  0.20f, 0.04f, 0.40f },  // left upper vertical
+    { -0.65f, -0.20f, 0.04f, 0.40f },  // left lower vertical
+    {  0.65f,  0.20f, 0.04f, 0.40f },  // right upper vertical
+    {  0.65f, -0.20f, 0.04f, 0.40f },  // right lower vertical
+
+    /* center chamber */
+    {  0.00f,  0.00f, 0.16f, 0.12f },  // central house (ghost house-ish)
+
+    /* small separators near center to form choke points */
+    { -0.28f,  0.12f, 0.10f, 0.03f },
+    { -0.28f, -0.12f, 0.10f, 0.03f },
+    {  0.28f,  0.12f, 0.10f, 0.03f },
+    {  0.28f, -0.12f, 0.10f, 0.03f },
+
+    /* corner chambers (square-ish) */
+    { -0.80f,  0.80f, 0.12f, 0.12f },
+    {  0.80f,  0.80f, 0.12f, 0.12f },
+    { -0.80f, -0.80f, 0.12f, 0.12f },
+    {  0.80f, -0.80f, 0.12f, 0.12f }
+};
+const int wall_count = (int)(sizeof(walls)/sizeof(walls[0]));
 
     /*  player square  */
     float half = 0.05f;  /* half-size of player square (side = 0.1) */
