@@ -134,7 +134,6 @@ int main(void) {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
     /* coordinate space is NDC (-1..1). */
-  /* Pac-Man style maze: replace your previous `walls[]` with this */
 Rect walls[] = {
     /* outer frame */
     { -0.95f,  0.0f, 0.05f, 0.95f },  // left outer
@@ -157,7 +156,7 @@ Rect walls[] = {
     {  0.65f, -0.20f, 0.04f, 0.40f },  // right lower vertical
 
     /* center chamber */
-    {  0.00f,  0.00f, 0.16f, 0.12f },  // central house (ghost house-ish)
+    {  0.00f,  0.00f, 0.16f, 0.12f },  // central house 
 
     /* small separators near center to form choke points */
     { -0.28f,  0.12f, 0.10f, 0.03f },
@@ -165,7 +164,7 @@ Rect walls[] = {
     {  0.28f,  0.12f, 0.10f, 0.03f },
     {  0.28f, -0.12f, 0.10f, 0.03f },
 
-    /* corner chambers (square-ish) */
+    /* corner chambers  */
     { -0.80f,  0.80f, 0.12f, 0.12f },
     {  0.80f,  0.80f, 0.12f, 0.12f },
     { -0.80f, -0.80f, 0.12f, 0.12f },
@@ -245,7 +244,7 @@ const int wall_count = (int)(sizeof(walls)/sizeof(walls[0]));
         for (int i = 0; i < wall_count; ++i) {
             glUniform2f(loc_uOffset, walls[i].x, walls[i].y);
             glUniform2f(loc_uScale, walls[i].halfW * 1.0f, walls[i].halfH * 1.0f); // scale is size
-            glUniform3f(loc_uColor, 0.6f, 0.6f, 0.6f);
+            glUniform3f(loc_uColor, 0.0f, 0.0f, 1.0f);
             glBindVertexArray(VAO);
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         }
