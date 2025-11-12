@@ -174,7 +174,7 @@ const int wall_count = (int)(sizeof(walls)/sizeof(walls[0]));
 
     /*  player square  */
     float half = 0.05f;  /* half-size of player square (side = 0.1) */
-    float posX = -0.7f, posY = -0.7f; /* start bottom-left area */
+    float posX = 0.3f, posY = 0.3f; /* start bottom-left area */
     const float speed = 1.2f; /* NDC units per second */
 
     double lastTime = glfwGetTime();
@@ -240,7 +240,7 @@ const int wall_count = (int)(sizeof(walls)/sizeof(walls[0]));
 
         glUseProgram(program);
 
-        /* draw walls (grey) */
+        /* draw walls (blue) */
         for (int i = 0; i < wall_count; ++i) {
             glUniform2f(loc_uOffset, walls[i].x, walls[i].y);
             glUniform2f(loc_uScale, walls[i].halfW * 1.0f, walls[i].halfH * 1.0f); // scale is size
@@ -252,7 +252,7 @@ const int wall_count = (int)(sizeof(walls)/sizeof(walls[0]));
         /* draw player (white) */
         glUniform2f(loc_uOffset, posX, posY);
         glUniform2f(loc_uScale, half * 1.0f, half * 1.0f);
-        glUniform3f(loc_uColor, 1.0f, 1.0f, 1.0f);
+        glUniform3f(loc_uColor, 1.0f, 1.0f, 0.0f);
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
