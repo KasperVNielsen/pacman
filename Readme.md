@@ -12,4 +12,5 @@ you can follow this video if needed
 https://www.youtube.com/watch?v=Y4F0tI7WlDs
 
 compile: gcc -g src/main.c src/game.c src/input.c src/glad.c -Iinclude -Llib -lglfw3dll -lopengl32 -lgdi32 -o pman.exe
+
 run: ./pman.exe

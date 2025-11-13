@@ -172,6 +172,16 @@ Rect walls[] = {
 };
 const int wall_count = (int)(sizeof(walls)/sizeof(walls[0]));
 
+typedef struct { float x, y, r; } Pellet;
+
+Pellet pellets[] = {
+    { -0.7f,  0.7f, 0.02f },
+    { -0.5f,  0.7f, 0.02f },
+    { -0.3f,  0.7f, 0.02f },
+    // add more
+};
+const int pellet_count = sizeof(pellets) / sizeof(pellets[0]);
+
     /*  player square  */
     float half = 0.05f;  /* half-size of player square (side = 0.1) */
     float posX = 0.3f, posY = 0.3f; /* start bottom-left area */
@@ -245,6 +255,14 @@ const int wall_count = (int)(sizeof(walls)/sizeof(walls[0]));
             glUniform2f(loc_uOffset, walls[i].x, walls[i].y);
             glUniform2f(loc_uScale, walls[i].halfW * 1.0f, walls[i].halfH * 1.0f); // scale is size
             glUniform3f(loc_uColor, 0.0f, 0.0f, 1.0f);
+            glBindVertexArray(VAO);
+            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        }
+        /* draw pellets (yellow) */
+        for (int i = 0; i < pellet_count; ++i) {
+            glUniform2f(loc_uOffset, pellets[i].x, pellets[i].y);
+            glUniform2f(loc_uScale, pellets[i].r, pellets[i].r);
+            glUniform3f(loc_uColor, 1.0f, 1.0f, 0.0f); // yellow
             glBindVertexArray(VAO);
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         }
