@@ -59,14 +59,22 @@ static GLuint link_program(GLuint v, GLuint f) {
     }
     return p;
 }
-
-/*  Wall struct & helpers  */
+/* Wall struct & helpers */
 typedef struct { float x, y; float halfW, halfH; } Rect;
 
+
 static int rects_overlap(float ax, float ay, float aHalfX, float aHalfY,
-                         float bx, float by, float bHalfX, float bHalfY) {
-    return (fabsf(ax - bx) < (aHalfX + bHalfX)) && (fabsf(ay - by) < (aHalfY + bHalfY));
+float bx, float by, float bHalfX, float bHalfY) {
+
+float aVisHalfX = aHalfX * 0.5f;
+float aVisHalfY = aHalfY * 0.5f;
+float bVisHalfX = bHalfX * 0.5f;
+float bVisHalfY = bHalfY * 0.5f;
+
+
+return (fabsf(ax - bx) < (aVisHalfX + bVisHalfX)) && (fabsf(ay - by) < (aVisHalfY + bVisHalfY));
 }
+
 
 /*  main  */
 int main(void) {
