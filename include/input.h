@@ -1,17 +1,12 @@
+// input.h
 #ifndef INPUT_H
 #define INPUT_H
-
 #include <GLFW/glfw3.h>
 
-typedef struct InputState {
-    int up;
-    int down;
-    int left;
-    int right;
-    int quit;
+typedef struct {
+    int up, down, left, right, quit;
 } InputState;
 
-void input_set_window(GLFWwindow *window);
-void input_poll(InputState *input);
+void input_poll(GLFWwindow *window, InputState *state);
 
-#endif
+#endif // INPUT_H
