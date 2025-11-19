@@ -18,6 +18,18 @@ int rects_overlap(float ax, float ay, float aHalfX, float aHalfY,
            (fabsf(ay - by) < (aVisHalfY + bVisHalfY));
 }
 
+static int append_pellet(Game *g, float x, float y, float r) {
+    Pellet *tmp = (Pellet*)realloc(g->pellets, (g->pellet_count + 1) * sizeof(Pellet));
+    if (!tmp) return 0;
+    g->pellets = tmp;
+    g->pellets[g->pellet_count].x = x;
+    g->pellets[g->pellet_count].y = y;
+    g->pellets[g->pellet_count].r = r;
+    g->pellet_count++;
+    return 1;
+}
+
+
 int game_init(Game *g, GLuint program, GLuint vao)
 {
     if (!g) return 0;
