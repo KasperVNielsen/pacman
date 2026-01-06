@@ -66,7 +66,7 @@ static void remove_pellet(Game *g, int idx) {
 
 /* Generate pellets on a centered grid. For each candidate we check
    overlap using the SCALED visual half-extents so pellets never overlap walls.
-   pellet_radius parameter is the stored r (kept unchanged).
+   pellet_radius parameter is the stored r.
 */
 static void generate_pellets(Game *g,
                              float pellet_radius,
@@ -90,17 +90,7 @@ static void generate_pellets(Game *g,
             // check overlap with walls (use scaled visuals)
             int blocked = 0;
             for (int w = 0; w < g->wall_count; ++w) {
-                if (rects_overlap_with_scales(x, y,
-                                              pellet_radius, pellet_radius,    /* pellet stored halves */
-                                              g->walls[w].x, g->walls[w].y,
-                                              /* pellet scales */ PELLET_SCALE_X, PELLET_SCALE_Y,
-                                              /* wall scales */ WALL_SCALE_X, WALL_SCALE_Y,
-                                              /* we need bHalf for wall; but wrapper expects both sides - see below */ 0.0f, 0.0f))
-                {
-                    /* Note: The wrapper usage above is incorrect because of parameter order.
-                       We'll instead call with correct parameter ordering below. */
-                }
-                /* proper call below */
+
                 if (rects_overlap_with_scales(x, y,
                                               pellet_radius, pellet_radius,
                                               g->walls[w].x, g->walls[w].y, g->walls[w].halfW, g->walls[w].halfH,

@@ -10,7 +10,7 @@
 #include "game.h"
 #include "input.h"
 
-/* Vertex & Fragment Shaders (same as before) */
+/* Vertex & Fragment Shaders  */
 static const char *vertex_src =
 "#version 330 core\n"
 "layout(location = 0) in vec2 aPos;\n"
