@@ -57,10 +57,26 @@ void updateGhostState(Ghost* ghost, int gameTimer, bool powerPelletActive);
 void moveGhost(Ghost* ghost);
 
 // Individual behavior functions (implement these based on ghost type)
+void calculateBlinkyTarget(Ghost* ghost, float pacmanX, float pacmanY);
+void calculatePinkyTarget(Ghost* ghost, float pacmanX, float pacmanY, int pacmanDir);
+void calculateInkyTarget(Ghost* ghost, float pacmanX, float pacmanY, int pacmanDir, Ghost* blinky);
+void calculateClydeTarget(Ghost* ghost, float pacmanX, float pacmanY);
 
 
 int main(){
 
-
+   Ghost ghosts[NUM_GHOSTS];
+    initGhosts(ghosts);
+    
+    // Game loop example
+    while (1) {
+        // Update each ghost
+        for (int i = 0; i < NUM_GHOSTS; i++) {
+            // Pass Pac-Man's position and direction
+            
+        }
+    }
+    
+    return 0;
 
 }
